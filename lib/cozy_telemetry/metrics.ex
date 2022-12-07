@@ -41,4 +41,44 @@ defmodule CozyTelemetry.Metrics do
       @behaviour CozyTelemetry.Metrics
     end
   end
+
+  @doc """
+  Same as `load_metrics_from_module/2` but raises if the module cannot be loaded.
+  """
+  def load_metrics_from_module!(module, meta) do
+    function = :metrics
+    arity = 1
+
+    Code.ensure_loaded!(module)
+
+    if Kernel.function_exported?(module, function, arity) do
+      log(module)
+      apply(module, function, [meta])
+    else
+      raise UndefinedFunctionError, module: module, function: function, arity: arity
+    end
+  end
+
+  @doc """
+  Loads the metrics from given module.
+  """
+  def load_metrics_from_module(module, meta) do
+    function = :metrics
+    arity = 1
+
+    Code.ensure_loaded(module)
+
+    if Kernel.function_exported?(module, function, arity) do
+      log(module)
+      apply(module, function, [meta])
+    else
+      []
+    end
+  end
+
+  defp log(module) do
+    Logger.debug(fn ->
+      "cozy_telemetry - loading metrics from #{inspect(module)}"
+    end)
+  end
 end
