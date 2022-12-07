@@ -31,6 +31,7 @@ defmodule CozyTelemetry.MixProject do
   defp deps do
     [
       {:telemetry, "~> 1.0"},
+      {:telemetry_poller, "~> 1.0"},
       {:telemetry_metrics, "~> 0.6"},
       {:ex_doc, "~> 0.25", only: :dev, runtime: false},
       {:telemetry_metrics_statsd, "~> 0.6", only: :test}
