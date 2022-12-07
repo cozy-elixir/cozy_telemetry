@@ -3,13 +3,13 @@ defmodule CozyTelemetry.Reporter do
   A behaviour for declaring reporters.
   """
 
+  @type init_arg :: keyword()
+
   @type child_spec() :: %{
           id: term(),
           start: term(),
           type: term()
         }
-
-  @type option :: {atom(), term()}
 
   @doc """
   Checks required dependencies.
@@ -21,7 +21,7 @@ defmodule CozyTelemetry.Reporter do
   @doc """
   Generates child specification for starting a reporter.
   """
-  @callback child_spec([option()]) :: child_spec()
+  @callback child_spec(init_arg) :: child_spec()
 
   require Logger
 
