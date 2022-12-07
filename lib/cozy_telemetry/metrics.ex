@@ -2,7 +2,7 @@ defmodule CozyTelemetry.Metrics do
   @moduledoc """
   A behaviour for declaring metrics.
 
-  Any module that wants to exposing metrics should reference this behaviour.
+  Any module that wants to exposing metrics should implement this behaviour.
 
       defmodule MyApp.Cache do
         use CozyTelemetry.Metrics
@@ -20,12 +20,12 @@ defmodule CozyTelemetry.Metrics do
 
   Then, the declared metrics in above module can be loaded with following configuration:
 
-    config :my_app, CozyTelemetry,
-      meta: [],
-      metrics: [
-        MyApp.Cache
-      ],
-      # ...
+      config :my_app, CozyTelemetry,
+        meta: [],
+        metrics: [
+          MyApp.Cache
+        ],
+        # ...
 
   """
 

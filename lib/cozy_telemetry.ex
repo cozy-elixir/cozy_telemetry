@@ -4,14 +4,30 @@ defmodule CozyTelemetry do
 
   ## Quick Start
 
-  Before running `#{__MODULE__}`, you must provide some configuration. Set some base configuration
-  within `config/config.exs`:
+  Before running `#{__MODULE__}`, you must provide some metrics modules. For example:
+
+      defmodule MyApp.Cache do
+        use CozyTelemetry.Metrics
+
+        @impl CozyTelemetry.Metrics
+        def metrics(meta) do
+          [
+            summary("cache.duration",
+              unit: {:native, :second},
+              tags: [:type, :key]
+            )
+          ]
+        end
+      end
+
+  Then, set some base configuration within `config/config.exs`:
 
       config :my_app, CozyTelemetry,
-        meta: [],                 # a keyword list will be passed to metrics modules
-        metrics: [],              # a list of metrics modules
-        reporter: {:console, []}  # the reporter and its options
-
+        meta: [],
+        metrics: [
+          MyApp.Cache
+        ],
+        reporter: {:console, []}
 
   Use the application configuration you've already set and include `#{__MODULE__}` in the list of
   supervised children:
@@ -25,6 +41,30 @@ defmodule CozyTelemetry do
 
         Supervisor.start_link(children, strategy: :one_for_one, name: MyApp.Supervisor)
       end
+
+  ### about option `:meta`
+
+  The value of option `:meta` is a keyword list, which will be passed as the argument of callback
+  `metrics/1` of `CozyTelemetry.Metrics`.
+
+  See `CozyTelemetry.Metrics`.
+
+  ### about option `:metrics`
+
+  The value of option `:metrics` is a list of metrics modules.
+
+  See `CozyTelemetry.Metrics`.
+
+  ### about option `:reporter`
+
+  The value of option `:reporter` specifies the reporter and its options, which is in format of
+  `{type, reporter_opts}`:
+
+  + available values of `type` are `:console`, `:statsd`, `prometheus`.
+  + available values of `reporter_opts` can be found in corresponding underlying modules:
+    - `Telemetry.Metrics.ConsoleReporter`
+    - [`TelemetryMetricsStatsd`](https://hexdocs.pm/telemetry_metrics_statsd)
+    - [`TelemetryMetricsPrometheus`](https://hexdocs.pm/telemetry_metrics_prometheus)
 
   """
 

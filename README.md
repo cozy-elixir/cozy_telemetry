@@ -16,7 +16,7 @@ end
 
 ## Usage
 
-For more information, see the [documentation](https://hexdocs.pm/cozy_telemetry).
+For more information, see the [documentation](https://hexdocs.pm/cozy_telemetry/CozyTelemetry.html).
 
 ## License
 
