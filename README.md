@@ -1,21 +1,23 @@
 # CozyTelemetry
 
-**TODO: Add description**
+> Provides a modular approach to using [beam-telemetry](https://github.com/beam-telemetry) packages.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `cozy_telemetry` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `cozy_telemetry` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:cozy_telemetry, "~> 0.1.0"}
+    {:cozy_telemetry, version}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/cozy_telemetry>.
+## Usage
 
+For more information, see the [documentation](https://hexdocs.pm/cozy_telemetry).
+
+## License
+
+Apache License 2.0
