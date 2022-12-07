@@ -28,7 +28,6 @@ defmodule CozyTelemetry do
 
   """
 
-  require Logger
   alias __MODULE__.Metrics
 
   @builtin_reporters %{

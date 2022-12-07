@@ -29,6 +29,8 @@ defmodule CozyTelemetry.Metrics do
 
   """
 
+  require Logger
+
   @type meta() :: keyword()
 
   @callback metrics(meta()) :: [Telemetry.Metrics.t()]
