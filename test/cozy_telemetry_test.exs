@@ -1,8 +1,46 @@
 defmodule CozyTelemetryTest do
   use ExUnit.Case
+  import ExUnit.CaptureLog
+
   doctest CozyTelemetry
 
-  test "greets the world" do
-    assert CozyTelemetry.hello() == :world
+  describe "child_spec/1" do
+    test "generates right childs specification" do
+      assert %{
+               id: Telemetry.Metrics.ConsoleReporter,
+               start: {Telemetry.Metrics.ConsoleReporter, :start_link, [[metrics: []]]}
+             } ==
+               CozyTelemetry.child_spec(
+                 meta: [name: :demo],
+                 metrics: [],
+                 reporter: {:console, []}
+               )
+    end
+
+    test "works with optional reporter" do
+      assert %{
+               id: TelemetryMetricsStatsd,
+               start: {TelemetryMetricsStatsd, :start_link, [[metrics: []]]}
+             } ==
+               CozyTelemetry.child_spec(
+                 meta: [name: :demo],
+                 metrics: [],
+                 reporter: {:statsd, []}
+               )
+    end
+
+    test "raises and prints error messages when the dependency of optional reporter is missing" do
+      fun = fn ->
+        assert_raise RuntimeError, "missing dependency - :telemetry_metrics_prometheus", fn ->
+          CozyTelemetry.child_spec(
+            meta: [name: :demo],
+            metrics: [],
+            reporter: {:prometheus, []}
+          )
+        end
+      end
+
+      assert capture_log(fun) =~ "{:telemetry_metrics_prometheus, version}"
+    end
   end
 end

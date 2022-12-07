@@ -1,4 +1,6 @@
 %{
+  "nimble_options": {:hex, :nimble_options, "0.5.1", "5c166f7669e40333191bea38e3bd3811cc13f459f1e4be49e89128a21b5d8c4d", [:mix], [], "hexpm", "d176cf7baa4fef0ceb301ca3eb8b55bd7de3e45f489c4f8b4f2849f1f114ef3e"},
   "telemetry": {:hex, :telemetry, "1.1.0", "a589817034a27eab11144ad24d5c0f9fab1f58173274b1e9bae7074af9cbee51", [:rebar3], [], "hexpm", "b727b2a1f75614774cff2d7565b64d0dfa5bd52ba517f16543e6fc7efcc0df48"},
   "telemetry_metrics": {:hex, :telemetry_metrics, "0.6.1", "315d9163a1d4660aedc3fee73f33f1d355dcc76c5c3ab3d59e76e3edf80eef1f", [:mix], [{:telemetry, "~> 0.4 or ~> 1.0", [hex: :telemetry, repo: "hexpm", optional: false]}], "hexpm", "7be9e0871c41732c233be71e4be11b96e56177bf15dde64a8ac9ce72ac9834c6"},
+  "telemetry_metrics_statsd": {:hex, :telemetry_metrics_statsd, "0.6.2", "3400d9ac909a05198f5f0d998c9876b3c8e06a7ba9f48fe6ab3f39dcfea93892", [:mix], [{:nimble_options, "~> 0.4", [hex: :nimble_options, repo: "hexpm", optional: false]}, {:telemetry, "~> 0.4 or ~> 1.0", [hex: :telemetry, repo: "hexpm", optional: false]}, {:telemetry_metrics, "~> 0.6", [hex: :telemetry_metrics, repo: "hexpm", optional: false]}], "hexpm", "20a5cc3779c0b4fe003df6f6bcd44c18d1cec09264ca8af5c700943f224f5ff1"},
 }
