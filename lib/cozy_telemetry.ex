@@ -55,6 +55,16 @@ defmodule CozyTelemetry do
 
   See `CozyTelemetry.Metrics`.
 
+  ### about option `:optional_metrics`
+
+  Same as option `:metrics`, but ignore errors when the given metrics module is missing.
+
+  See `CozyTelemetry.Metrics`.
+
+  > When using `:cozy_telemetry` as a direct dependency, this option is unnecessary.
+  > But, when building a new package on `:cozy_telemetry`, this option is useful for some case, such
+  > as auto loading metrics modules.
+
   ### about option `:reporter`
 
   The value of option `:reporter` specifies the reporter and its options, which is in format of
@@ -81,8 +91,9 @@ defmodule CozyTelemetry do
   def child_spec(init_arg) do
     meta = Keyword.get(init_arg, :meta, [])
     metrics_modules = Keyword.get(init_arg, :metrics, [])
+    optional_metrics_modules = Keyword.get(init_arg, :optional_metrics, [])
 
-    metrics = load_metrics(metrics_modules, meta)
+    metrics = load_metrics(metrics_modules, optional_metrics_modules, meta)
 
     init_arg
     |> Keyword.fetch!(:reporter)
@@ -91,10 +102,19 @@ defmodule CozyTelemetry do
     |> generate_child_spec(metrics)
   end
 
-  defp load_metrics(modules, meta) when is_list(modules) do
-    Enum.reduce(modules, [], fn module, metrics ->
-      metrics ++ Metrics.load_metrics_from_module!(module, meta)
-    end)
+  defp load_metrics(modules, optional_modules, meta)
+       when is_list(modules) and is_list(optional_modules) do
+    metrics =
+      Enum.reduce(modules, [], fn module, metrics ->
+        metrics ++ Metrics.load_metrics_from_module!(module, meta)
+      end)
+
+    optional_metrics =
+      Enum.reduce(optional_modules, [], fn module, metrics ->
+        metrics ++ Metrics.load_metrics_from_module(module, meta)
+      end)
+
+    metrics ++ optional_metrics
   end
 
   defp normalize_reporter({type, opts}) when type in @builtin_reporter_types do
