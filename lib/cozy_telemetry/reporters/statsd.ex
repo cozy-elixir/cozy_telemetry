@@ -1,9 +1,6 @@
 defmodule CozyTelemetry.Reporters.Statsd do
-  alias CozyTelemetry.Reporter
-
   @behaviour CozyTelemetry.Reporter
 
-  @reporter_package :telemetry_metrics_statsd
   @reporter_module TelemetryMetricsStatsd
 
   @moduledoc """
@@ -19,9 +16,11 @@ defmodule CozyTelemetry.Reporters.Statsd do
       @reporter_module.child_spec(init_arg)
     end
   else
+    @reporter_package :telemetry_metrics_statsd
+
     @impl true
     def check_deps() do
-      Reporter.print_missing_package(@reporter_package)
+      CozyTelemetry.Reporter.print_missing_package(@reporter_package)
       raise "missing dependency - #{inspect(@reporter_package)}"
     end
 

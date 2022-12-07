@@ -1,9 +1,6 @@
 defmodule CozyTelemetry.Reporters.Prometheus do
-  alias CozyTelemetry.Reporter
-
   @behaviour CozyTelemetry.Reporter
 
-  @reporter_package :telemetry_metrics_prometheus
   @reporter_module TelemetryMetricsPrometheus
 
   @moduledoc """
@@ -19,9 +16,11 @@ defmodule CozyTelemetry.Reporters.Prometheus do
       @reporter_module.child_spec(init_arg)
     end
   else
+    @reporter_package :telemetry_metrics_prometheus
+
     @impl true
     def check_deps() do
-      Reporter.print_missing_package(@reporter_package)
+      CozyTelemetry.Reporter.print_missing_package(@reporter_package)
       raise "missing dependency - #{inspect(@reporter_package)}"
     end
 
