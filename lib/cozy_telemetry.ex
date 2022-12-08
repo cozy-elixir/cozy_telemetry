@@ -1,6 +1,6 @@
 defmodule CozyTelemetry do
   @moduledoc """
-  Provides a modular approach to using [beam-telemetry](https://github.com/beam-telemetry) packages.
+  Provides a modular approach for using [beam-telemetry](https://github.com/beam-telemetry) packages.
 
   ## Quick Start
 
