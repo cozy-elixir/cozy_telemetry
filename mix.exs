@@ -1,7 +1,7 @@
 defmodule CozyTelemetry.MixProject do
   use Mix.Project
 
-  @version "0.3.0"
+  @version "0.3.1"
   @description "Provides a modular approach for using beam-telemetry packages."
   @source_url "https://github.com/cozy-elixir/cozy_telemetry"
 
