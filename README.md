@@ -4,7 +4,7 @@
 
 ## Installation
 
-The package can be installed by adding `cozy_telemetry` to your list of dependencies in `mix.exs`:
+Add `cozy_telemetry` to the list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
