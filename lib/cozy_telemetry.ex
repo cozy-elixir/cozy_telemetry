@@ -8,6 +8,7 @@ defmodule CozyTelemetry do
 
       defmodule MyApp.Cache do
         use CozyTelemetry.Metrics
+        use CozyTelemetry.Measurements
 
         @impl CozyTelemetry.Metrics
         def metrics(meta) do
@@ -16,6 +17,13 @@ defmodule CozyTelemetry do
               unit: {:native, :second},
               tags: [:type, :key]
             )
+          ]
+        end
+
+        @impl CozyTelemetry.Measurements
+        def periodic_measurements(meta) do
+          [
+            {__MODULE__, :dispatch_stats, []}
           ]
         end
       end
@@ -27,7 +35,11 @@ defmodule CozyTelemetry do
         metrics: [
           MyApp.Cache
         ],
-        reporter: {:console, []}
+        measurements: [
+          MyApp.Cache
+        ],
+        reporter: {:console, []},
+        poller: [period: 10_000]
 
   Use the application configuration you've already set and include `#{__MODULE__}` in the list of
   supervised children:
@@ -35,7 +47,8 @@ defmodule CozyTelemetry do
       # lib/my_app/application.ex
       def start(_type, _args) do
         children = [
-          {CozyTelemetry.Reporter, Application.fetch_env!(:my_app, CozyTelemetry)}
+          {CozyTelemetry.Reporter, Application.fetch_env!(:my_app, CozyTelemetry)},
+          {CozyTelemetry.Poller, Application.fetch_env!(:my_app, CozyTelemetry)},
           # ...
         ]
 
@@ -59,11 +72,21 @@ defmodule CozyTelemetry do
 
   Same as option `:metrics`, but ignore errors when the given metrics module is missing.
 
-  See `CozyTelemetry.Metrics`.
+  ### about option `:measurements`
+
+  The value of option `:measurements` is a list of measurements modules.
+
+  See `CozyTelemetry.Measurements`.
+
+  ### about option `:optional_measurements`
+
+  Same as option `:measurements`, but ignore errors when the given measurements module is missing.
+
+  See `CozyTelemetry.Measurements`.
 
   > When using `:cozy_telemetry` as a direct dependency, this option is unnecessary.
   > But, when building a new package on `:cozy_telemetry`, this option is useful for some case, such
-  > as auto loading metrics modules.
+  > as auto loading measurements modules.
 
   ### about option `:reporter`
 
@@ -75,6 +98,10 @@ defmodule CozyTelemetry do
     - `Telemetry.Metrics.ConsoleReporter`
     - [`TelemetryMetricsStatsd`](https://hexdocs.pm/telemetry_metrics_statsd)
     - [`TelemetryMetricsPrometheus`](https://hexdocs.pm/telemetry_metrics_prometheus)
+
+  ### about option `:poller`
+
+  The value of option `:poller` is the options of `:telemetry_poller.start_link/1`.
 
   """
 end
