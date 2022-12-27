@@ -48,9 +48,7 @@ defmodule CozyTelemetry.PollerTest do
              } ==
                CozyTelemetry.Poller.child_spec(
                  meta: [name: :demo],
-                 measurements: [
-                   MyApp.Cache
-                 ],
+                 measurements: [MyApp.Cache],
                  poller: [period: 5000]
                )
     end
@@ -83,9 +81,7 @@ defmodule CozyTelemetry.PollerTest do
              } ==
                CozyTelemetry.Poller.child_spec(
                  meta: [name: :demo],
-                 optional_measurements: [
-                   MyApp.Cache
-                 ],
+                 optional_measurements: [MyApp.Cache],
                  poller: [period: 5000]
                )
     end
