@@ -91,7 +91,7 @@ defmodule CozyTelemetry.ReporterTest do
       assert %{
                id: Telemetry.Metrics.ConsoleReporter,
                start: {Telemetry.Metrics.ConsoleReporter, :start_link, [[metrics: []]]}
-             } =
+             } ==
                CozyTelemetry.Reporter.child_spec(
                  meta: [name: :demo],
                  optional_metrics: [YourApp.Repo],
