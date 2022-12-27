@@ -4,7 +4,7 @@ defmodule CozyTelemetry do
 
   ## Quick Start
 
-  Before running `#{__MODULE__}`, you must provide some metrics modules. For example:
+  Before running `#{__MODULE__}`, you must provide some modules. For example:
 
       defmodule MyApp.Cache do
         use CozyTelemetry.Metrics
@@ -46,9 +46,11 @@ defmodule CozyTelemetry do
 
       # lib/my_app/application.ex
       def start(_type, _args) do
+        cozy_telemetry_config = Application.fetch_env!(:my_app, CozyTelemetry)
+
         children = [
-          {CozyTelemetry.Reporter, Application.fetch_env!(:my_app, CozyTelemetry)},
-          {CozyTelemetry.Poller, Application.fetch_env!(:my_app, CozyTelemetry)},
+          {CozyTelemetry.Reporter, cozy_telemetry_config},
+          {CozyTelemetry.Poller, cozy_telemetry_config},
           # ...
         ]
 
