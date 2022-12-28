@@ -4,7 +4,7 @@ defmodule CozyTelemetry do
 
   ## Quick Start
 
-  Before running `#{__MODULE__}`, you must provide some modules. For example:
+  Before running `CozyTelemetry`, you must provide some modules. For example:
 
       defmodule MyApp.Cache do
         use CozyTelemetry.Metrics
@@ -44,7 +44,7 @@ defmodule CozyTelemetry do
         reporter: {:console, []},
         poller: [period: 10_000]
 
-  Use the application configuration you've already set and include `#{__MODULE__}` in the list of
+  Use the application configuration you've already set and include `CozyTelemetry.*` in the list of
   supervised children:
 
       # lib/my_app/application.ex
@@ -62,10 +62,12 @@ defmodule CozyTelemetry do
 
   ### about option `:meta`
 
-  The value of option `:meta` is a keyword list, which will be passed as the argument of callback
-  `metrics/1` of `CozyTelemetry.Metrics`.
+  The value of option `:meta` is a keyword list, which will be passed as the argument of:
 
-  See `CozyTelemetry.Metrics`.
+  + callback `metrics/1` of `CozyTelemetry.Metrics`.
+  + callback `periodic_measurements/1` of `CozyTelemetry.Measurements`.
+
+  See `CozyTelemetry.Metrics` and `CozyTelemetry.Measurements`.
 
   ### about option `:metrics`
 
