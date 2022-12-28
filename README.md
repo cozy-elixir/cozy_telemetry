@@ -14,6 +14,16 @@ def deps do
 end
 ```
 
+> **Note**
+>
+> `cozy_telemetry` is depending on following packages:
+>
+> - `telemetry`
+> - `telemetry_poller`
+> - `telemetry_metrics`
+>
+> If you want to use them, there is no need to add them to `mix.exs` explicitly. They are available after you adding `cozy_telemetry`.
+
 ## Usage
 
 For more information, see the [documentation](https://hexdocs.pm/cozy_telemetry/CozyTelemetry.html).
