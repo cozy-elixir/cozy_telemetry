@@ -10,6 +10,9 @@ defmodule CozyTelemetry do
         use CozyTelemetry.Metrics
         use CozyTelemetry.Measurements
 
+        # cache related code
+        # ...
+
         @impl CozyTelemetry.Metrics
         def metrics(meta) do
           [
