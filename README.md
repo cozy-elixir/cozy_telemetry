@@ -1,5 +1,7 @@
 # CozyTelemetry
 
+[![CI](https://github.com/cozy-elixir/cozy_telemetry/actions/workflows/ci.yml/badge.svg)](https://github.com/cozy-elixir/cozy_telemetry/actions/workflows/ci.yml)
+
 > Provides a modular approach for using [beam-telemetry](https://github.com/beam-telemetry) packages.
 
 ## Installation
