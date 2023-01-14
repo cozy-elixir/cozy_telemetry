@@ -9,7 +9,7 @@ defmodule CozyTelemetry.MixProject do
     [
       app: :cozy_telemetry,
       version: @version,
-      elixir: "~> 1.14",
+      elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: @description,
