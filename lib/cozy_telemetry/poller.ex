@@ -1,6 +1,13 @@
 defmodule CozyTelemetry.Poller do
+  @moduledoc """
+  The application that fetches measurements periodically.
+  """
+
   alias CozyTelemetry.Measurements
 
+  @doc """
+  Builds a child specifications.
+  """
   def child_spec(init_arg) do
     meta = Keyword.get(init_arg, :meta, [])
     measurements_modules = Keyword.get(init_arg, :measurements, [])

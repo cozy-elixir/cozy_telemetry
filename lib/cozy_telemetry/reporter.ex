@@ -1,6 +1,8 @@
 defmodule CozyTelemetry.Reporter do
   @moduledoc """
-  A behaviour for declaring reporters.
+  The application which reports metrics.
+
+  This module also defines a behaviour for declaring reporters.
   """
 
   @type init_arg :: keyword()
@@ -49,6 +51,9 @@ defmodule CozyTelemetry.Reporter do
 
   @builtin_reporter_types Map.keys(@builtin_reporters)
 
+  @doc """
+  Builds a child specifications.
+  """
   def child_spec(init_arg) do
     meta = Keyword.get(init_arg, :meta, [])
     metrics_modules = Keyword.get(init_arg, :metrics, [])

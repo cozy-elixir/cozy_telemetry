@@ -14,11 +14,17 @@ defmodule CozyTelemetry do
         # ...
 
         @impl CozyTelemetry.Metrics
-        def metrics(meta) do
+        def metrics(_meta) do
           [
             summary("cache.duration",
               unit: {:native, :second},
               tags: [:type, :key]
+            ),
+
+            last_value("cache.stats.hits",
+              event_name: "cache.stats",
+              measurement: :hits,
+              tags: [:cache]
             )
           ]
         end
