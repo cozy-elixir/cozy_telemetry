@@ -31,7 +31,7 @@ defmodule CozyTelemetry.Measurements do
 
   @type meta() :: keyword()
 
-  @callback periodic_measurements(meta()) :: [TelemetryPoller.measurement()]
+  @callback periodic_measurements(meta()) :: [:telemetry_poller.measurement()]
 
   @doc false
   defmacro __using__(_opts) do
