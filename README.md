@@ -1,6 +1,6 @@
 # CozyTelemetry
 
-[![CI](https://github.com/cozy-elixir/cozy_telemetry/actions/workflows/ci.yml/badge.svg)](https://github.com/cozy-elixir/cozy_telemetry/actions/workflows/ci.yml)
+[![CI](https://github.com/cozy-elixir/cozy_telemetry/actions/workflows/ci.yml/badge.svg)](https://github.com/cozy-elixir/cozy_telemetry/actions/workflows/ci.yml) [![Hex.pm](https://img.shields.io/hexpm/v/cozy_telemetry.svg)](https://hex.pm/packages/cozy_telemetry)
 
 > Provides a modular approach for using [beam-telemetry](https://github.com/beam-telemetry) packages.
 
@@ -11,7 +11,7 @@ Add `cozy_telemetry` to the list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:cozy_telemetry, version}
+    {:cozy_telemetry, "~> <version>"}
   ]
 end
 ```
