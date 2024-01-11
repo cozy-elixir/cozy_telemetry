@@ -6,6 +6,10 @@
 
 > Provides a modular approach for using [beam-telemetry](https://github.com/beam-telemetry) packages.
 
+## Notes
+
+This package is still in its early stages, so it may still undergo significant changes, potentially leading to breaking changes.
+
 ## Installation
 
 Add `:cozy_telemetry` to the list of dependencies in `mix.exs`:
