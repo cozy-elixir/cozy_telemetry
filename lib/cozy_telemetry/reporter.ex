@@ -28,9 +28,7 @@ defmodule CozyTelemetry.Reporter do
   """
   @callback child_spec(init_arg) :: child_spec()
 
-  @doc """
-  Prints consistent error messages of missing package for reporters.
-  """
+  @doc false
   def print_missing_package(package_name) do
     Logger.error("""
     Could not find #{inspect(package_name)} dependency.
