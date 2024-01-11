@@ -98,4 +98,7 @@ defmodule CozyTelemetry do
   The value of option `:poller` is the options of `:telemetry_poller.start_link/1`.
 
   """
+
+  defdelegate load_metrics(opts), to: CozyTelemetry.Spec
+  defdelegate load_measurements(opts), to: CozyTelemetry.Spec
 end
