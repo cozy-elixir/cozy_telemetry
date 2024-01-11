@@ -1,11 +1,9 @@
 defmodule CozyTelemetry.Reporters.Statsd do
+  @moduledoc false
+
   @behaviour CozyTelemetry.Reporter
 
   @reporter_module TelemetryMetricsStatsd
-
-  @moduledoc """
-  A wrapper of `#{@reporter_module}`.
-  """
 
   if Code.ensure_loaded?(@reporter_module) do
     @impl true

@@ -1,11 +1,9 @@
 defmodule CozyTelemetry.Reporters.Console do
+  @moduledoc false
+
   @behaviour CozyTelemetry.Reporter
 
   @reporter_module Telemetry.Metrics.ConsoleReporter
-
-  @moduledoc """
-  A wrapper of `#{@reporter_module}`.
-  """
 
   @impl true
   def check_deps() do

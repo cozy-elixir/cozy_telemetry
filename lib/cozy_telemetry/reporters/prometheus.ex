@@ -1,11 +1,9 @@
 defmodule CozyTelemetry.Reporters.Prometheus do
+  @moduledoc false
+
   @behaviour CozyTelemetry.Reporter
 
   @reporter_module TelemetryMetricsPrometheus
-
-  @moduledoc """
-  A wrapper of `#{@reporter_module}`.
-  """
 
   if Code.ensure_loaded?(@reporter_module) do
     @impl true
