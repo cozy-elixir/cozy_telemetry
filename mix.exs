@@ -34,7 +34,7 @@ defmodule CozyTelemetry.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_metrics_statsd, "~> 0.6", only: [:test]},
-      {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
+      {:ex_check, "~> 0.15.0", only: [:dev], runtime: false},
       {:credo, ">= 0.0.0", only: [:dev], runtime: false},
       {:dialyxir, ">= 0.0.0", only: [:dev], runtime: false},
       {:doctor, ">= 0.0.0", only: [:dev], runtime: false},
@@ -48,13 +48,12 @@ defmodule CozyTelemetry.MixProject do
       extras: ["README.md", "CHANGELOG.md"],
       main: "readme",
       source_url: @source_url,
-      source_ref: @version
+      source_ref: "v#{@version}"
     ]
   end
 
   defp package do
     [
-      exclude_patterns: [],
       licenses: ["Apache-2.0"],
       links: %{GitHub: @source_url}
     ]
@@ -65,8 +64,8 @@ defmodule CozyTelemetry.MixProject do
   end
 
   defp tag_release(_) do
-    Mix.shell().info("Tagging release as #{@version}")
-    System.cmd("git", ["tag", @version])
+    Mix.shell().info("Tagging release as v#{@version}")
+    System.cmd("git", ["tag", "v#{@version}"])
     System.cmd("git", ["push", "--tags"])
   end
 end
