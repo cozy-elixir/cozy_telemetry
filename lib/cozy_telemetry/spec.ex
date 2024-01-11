@@ -116,8 +116,10 @@ defmodule CozyTelemetry.Spec do
     Code.ensure_loaded!(module)
 
     if Kernel.function_exported?(module, function, arity) do
-      log_metrics_loading(module)
-      apply(module, function, [meta])
+      metrics = apply(module, function, [meta])
+      log_metrics_loading(module, length(metrics))
+
+      metrics
     else
       raise UndefinedFunctionError, module: module, function: function, arity: arity
     end
@@ -133,16 +135,18 @@ defmodule CozyTelemetry.Spec do
     Code.ensure_loaded(module)
 
     if Kernel.function_exported?(module, function, arity) do
-      log_metrics_loading(module)
-      apply(module, function, [meta])
+      metrics = apply(module, function, [meta])
+      log_metrics_loading(module, length(metrics))
+
+      metrics
     else
       []
     end
   end
 
-  defp log_metrics_loading(module) do
+  defp log_metrics_loading(module, count) do
     Logger.debug(fn ->
-      "cozy_telemetry - loading metrics from #{inspect(module)}"
+      "cozy_telemetry - loading #{count} metrics from #{inspect(module)}"
     end)
   end
 
@@ -156,8 +160,10 @@ defmodule CozyTelemetry.Spec do
     Code.ensure_loaded!(module)
 
     if Kernel.function_exported?(module, function, arity) do
-      log_measurements_loading(module)
-      apply(module, function, [meta])
+      measurements = apply(module, function, [meta])
+      log_measurements_loading(module, length(measurements))
+
+      measurements
     else
       raise UndefinedFunctionError, module: module, function: function, arity: arity
     end
@@ -173,16 +179,18 @@ defmodule CozyTelemetry.Spec do
     Code.ensure_loaded(module)
 
     if Kernel.function_exported?(module, function, arity) do
-      log_measurements_loading(module)
-      apply(module, function, [meta])
+      measurements = apply(module, function, [meta])
+      log_measurements_loading(module, length(measurements))
+
+      measurements
     else
       []
     end
   end
 
-  defp log_measurements_loading(module) do
+  defp log_measurements_loading(module, count) do
     Logger.debug(fn ->
-      "cozy_telemetry - loading measurements from #{inspect(module)}"
+      "cozy_telemetry - loading #{count} measurements from #{inspect(module)}"
     end)
   end
 end
