@@ -6,14 +6,10 @@ defmodule CozyTelemetry do
 
   Before running `CozyTelemetry`, you must provide some modules. For example:
 
-      defmodule MyApp.Cache do
-        use CozyTelemetry.Metrics
-        use CozyTelemetry.Measurements
+      defmodule MyApp.Cache.TelemetrySpec do
+        use CozyTelemetry.Spec
 
-        # cache related code
-        # ...
-
-        @impl CozyTelemetry.Metrics
+        @impl true
         def metrics(_meta) do
           [
             summary("cache.duration",
@@ -29,8 +25,8 @@ defmodule CozyTelemetry do
           ]
         end
 
-        @impl CozyTelemetry.Measurements
-        def periodic_measurements(meta) do
+        @impl true
+        def measurements(meta) do
           [
             {__MODULE__, :dispatch_stats, []}
           ]
@@ -41,11 +37,8 @@ defmodule CozyTelemetry do
 
       config :my_app, CozyTelemetry,
         meta: [],
-        metrics: [
-          MyApp.Cache
-        ],
-        measurements: [
-          MyApp.Cache
+        specs: [
+          MyApp.Cache.TelemetrySpec
         ],
         reporter: {:console, []},
         poller: [period: 10_000]
@@ -70,36 +63,24 @@ defmodule CozyTelemetry do
 
   The value of option `:meta` is a keyword list, which will be passed as the argument of:
 
-  + callback `metrics/1` of `CozyTelemetry.Metrics`.
-  + callback `periodic_measurements/1` of `CozyTelemetry.Measurements`.
+  + callback `metrics/1` of `CozyTelemetry.Spec`.
+  + callback `measurements/1` of `CozyTelemetry.Spec`.
 
-  See `CozyTelemetry.Metrics` and `CozyTelemetry.Measurements`.
+  See `CozyTelemetry.Spec` for more details.
 
-  ### about option `:metrics`
+  ### about option `:specs`
 
-  The value of option `:metrics` is a list of metrics modules.
+  The value of option `:specs` is a list of spec modules.
 
-  See `CozyTelemetry.Metrics`.
+  See `CozyTelemetry.Spec` for more details.
 
-  ### about option `:optional_metrics`
+  ### about option `:optional_specs`
 
-  Same as option `:metrics`, but ignore errors when the given metrics module is missing.
-
-  ### about option `:measurements`
-
-  The value of option `:measurements` is a list of measurements modules.
-
-  See `CozyTelemetry.Measurements`.
-
-  ### about option `:optional_measurements`
-
-  Same as option `:measurements`, but ignore errors when the given measurements module is missing.
-
-  See `CozyTelemetry.Measurements`.
+  Same as option `:specs`, but ignore errors when the given spec module is missing.
 
   > When using `:cozy_telemetry` as a direct dependency, this option is unnecessary.
-  > But, when building a new package on `:cozy_telemetry`, this option is useful for some case, such
-  > as auto loading measurements modules.
+  > But, when building a new package on `:cozy_telemetry`, this option is useful for some case,
+  > such as auto loading measurements modules.
 
   ### about option `:reporter`
 

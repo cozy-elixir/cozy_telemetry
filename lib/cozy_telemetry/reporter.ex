@@ -5,6 +5,9 @@ defmodule CozyTelemetry.Reporter do
   This module also defines a behaviour for declaring reporters.
   """
 
+  require Logger
+  alias CozyTelemetry.Spec
+
   @type init_arg :: keyword()
 
   @type child_spec() :: %{
@@ -25,8 +28,6 @@ defmodule CozyTelemetry.Reporter do
   """
   @callback child_spec(init_arg) :: child_spec()
 
-  require Logger
-
   @doc """
   Prints consistent error messages of missing package for reporters.
   """
@@ -41,8 +42,6 @@ defmodule CozyTelemetry.Reporter do
     """)
   end
 
-  alias CozyTelemetry.Metrics
-
   @builtin_reporters %{
     console: CozyTelemetry.Reporters.Console,
     statsd: CozyTelemetry.Reporters.Statsd,
@@ -55,32 +54,13 @@ defmodule CozyTelemetry.Reporter do
   Builds a child specifications.
   """
   def child_spec(init_arg) do
-    meta = Keyword.get(init_arg, :meta, [])
-    metrics_modules = Keyword.get(init_arg, :metrics, [])
-    optional_metrics_modules = Keyword.get(init_arg, :optional_metrics, [])
-
-    metrics = load_metrics(metrics_modules, optional_metrics_modules, meta)
+    metrics = Spec.load_metrics(init_arg)
 
     init_arg
     |> Keyword.fetch!(:reporter)
     |> normalize_reporter()
     |> check_reporter_deps()
     |> generate_child_spec(metrics)
-  end
-
-  defp load_metrics(modules, optional_modules, meta)
-       when is_list(modules) and is_list(optional_modules) do
-    metrics =
-      Enum.reduce(modules, [], fn module, metrics ->
-        metrics ++ Metrics.load_metrics_from_module!(module, meta)
-      end)
-
-    optional_metrics =
-      Enum.reduce(optional_modules, [], fn module, metrics ->
-        metrics ++ Metrics.load_metrics_from_module(module, meta)
-      end)
-
-    metrics ++ optional_metrics
   end
 
   defp normalize_reporter({type, opts}) when type in @builtin_reporter_types do

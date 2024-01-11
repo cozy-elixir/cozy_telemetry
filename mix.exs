@@ -45,7 +45,7 @@ defmodule CozyTelemetry.MixProject do
 
   defp docs do
     [
-      extras: ["README.md"],
+      extras: ["README.md", "CHANGELOG.md"],
       main: "readme",
       source_url: @source_url,
       source_ref: @version

@@ -2,10 +2,10 @@ defmodule CozyTelemetry.ReporterTest do
   use ExUnit.Case
   import ExUnit.CaptureLog
 
-  defmodule MyApp.Cache do
-    use CozyTelemetry.Metrics
+  defmodule MyApp.Cache.TelemetrySpec do
+    use CozyTelemetry.Spec
 
-    @impl CozyTelemetry.Metrics
+    @impl true
     def metrics(_meta) do
       [
         summary("cache.duration",
@@ -24,7 +24,7 @@ defmodule CozyTelemetry.ReporterTest do
              } ==
                CozyTelemetry.Reporter.child_spec(
                  meta: [name: :demo],
-                 metrics: [],
+                 specs: [],
                  reporter: {:console, []}
                )
     end
@@ -47,7 +47,7 @@ defmodule CozyTelemetry.ReporterTest do
              } =
                CozyTelemetry.Reporter.child_spec(
                  meta: [name: :demo],
-                 metrics: [MyApp.Cache],
+                 specs: [MyApp.Cache.TelemetrySpec],
                  reporter: {:console, []}
                )
     end
@@ -58,7 +58,7 @@ defmodule CozyTelemetry.ReporterTest do
                    fn ->
                      CozyTelemetry.Reporter.child_spec(
                        meta: [name: :demo],
-                       metrics: [YourApp.Repo],
+                       specs: [YourApp.Repo],
                        reporter: {:console, []}
                      )
                    end
@@ -82,7 +82,7 @@ defmodule CozyTelemetry.ReporterTest do
              } =
                CozyTelemetry.Reporter.child_spec(
                  meta: [name: :demo],
-                 optional_metrics: [MyApp.Cache],
+                 optional_specs: [MyApp.Cache.TelemetrySpec],
                  reporter: {:console, []}
                )
     end
@@ -94,7 +94,7 @@ defmodule CozyTelemetry.ReporterTest do
              } ==
                CozyTelemetry.Reporter.child_spec(
                  meta: [name: :demo],
-                 optional_metrics: [YourApp.Repo],
+                 optional_specs: [YourApp.Repo],
                  reporter: {:console, []}
                )
     end
@@ -106,7 +106,7 @@ defmodule CozyTelemetry.ReporterTest do
              } ==
                CozyTelemetry.Reporter.child_spec(
                  meta: [name: :demo],
-                 metrics: [],
+                 specs: [],
                  reporter: {:statsd, []}
                )
     end
@@ -116,7 +116,7 @@ defmodule CozyTelemetry.ReporterTest do
         assert_raise RuntimeError, "missing dependency - :telemetry_metrics_prometheus", fn ->
           CozyTelemetry.Reporter.child_spec(
             meta: [name: :demo],
-            metrics: [],
+            specs: [],
             reporter: {:prometheus, []}
           )
         end
